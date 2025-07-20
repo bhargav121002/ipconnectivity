@@ -1,0 +1,2382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Practice App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .question-container {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .question {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .options {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .option:hover::before {
+            left: 100%;
+        }
+
+        .option.selected {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+            transform: scale(1.02);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .results {
+            text-align: center;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(#667eea 0deg, #764ba2 180deg, #e9ecef 180deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px auto;
+            position: relative;
+        }
+
+        .score-inner {
+            width: 160px;
+            height: 160px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .score-percentage {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .score-text {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .results h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+            font-size: 0.9rem;
+        }
+
+        .wrong-answer-item {
+            background: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .wrong-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .answer-review {
+            display: grid;
+            gap: 10px;
+        }
+
+        .answer-option {
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .correct-answer {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            position: relative;
+        }
+
+        .correct-answer::before {
+            content: "✓ ";
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .wrong-answer {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            position: relative;
+        }
+
+        .wrong-answer::before {
+            content: "✗ ";
+            font-weight: bold;
+            color: #dc3545;
+        }
+
+        .answer-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .correct-label {
+            color: #28a745;
+        }
+
+        .wrong-label {
+            color: #dc3545;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+            
+            .score-circle {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .score-inner {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">MCQ Practice</h1>
+        </div>
+
+        <div id="quiz-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+
+            <div class="question-container" id="question-container">
+                <div class="question-number" id="question-number"></div>
+                <div class="question" id="question"></div>
+                <div class="options" id="options"></div>
+                <div class="buttons">
+                    <button class="btn btn-secondary" id="prev-btn" onclick="previousQuestion()">Previous</button>
+                    <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="results-container" class="results hidden">
+            <h2>Quiz Complete!</h2>
+            <div class="score-circle">
+                <div class="score-inner">
+                    <div class="score-percentage" id="score-percentage"></div>
+                    <div class="score-text">Score</div>
+                </div>
+            </div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number" id="correct-answers"></div>
+                    <div class="stat-label">Correct</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="incorrect-answers"></div>
+                    <div class="stat-label">Incorrect</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="total-questions"></div>
+                    <div class="stat-label">Total</div>
+                </div>
+            </div>
+            
+            <div id="wrong-answers-section">
+                <h3 style="color: #333; margin: 30px 0 20px 0; font-size: 1.5rem;">Review Wrong Answers</h3>
+                <div id="wrong-answers-list"></div>
+            </div>
+            
+            <button class="btn btn-primary" onclick="restartQuiz()">Restart Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        // Sample MCQ questions - fixed JSON format
+        const questions = [
+          {
+    "question": "Which routing table code represents a directly connected network?",
+    "options": [
+      "S",
+      "C",
+      "O",
+      "R"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the administrative distance of a static route by default?",
+    "options": [
+      "0",
+      "1",
+      "90",
+      "120"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which factor is considered first when a router chooses the best route?",
+    "options": [
+      "Metric",
+      "Administrative Distance",
+      "Longest Prefix Match",
+      "Hop Count"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command shows the IPv4 routing table in Cisco IOS?",
+    "options": [
+      "show route ipv4",
+      "show ip interface brief",
+      "show ip route",
+      "display ip routing-table"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What prefix represents the default route in IPv4?",
+    "options": [
+      "255.255.255.0",
+      "192.168.0.0/16",
+      "10.0.0.0/8",
+      "0.0.0.0/0"
+    ],
+    "correct": 3
+  },
+  {
+    "question": "Which routing protocol has the highest administrative distance by default?",
+    "options": [
+      "OSPF",
+      "Static",
+      "RIP",
+      "Connected"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What metric does RIP use to select routes?",
+    "options": [
+      "Bandwidth",
+      "Hop Count",
+      "Cost",
+      "Delay"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the purpose of the 'next hop' in a routing table?",
+    "options": [
+      "Identifies the interface",
+      "Specifies the exit gateway",
+      "Displays the MAC address",
+      "Provides a subnet mask"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which routing table code represents a directly connected network? (Q9)",
+    "options": [
+      "S",
+      "C",
+      "O",
+      "R"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the administrative distance of a static route by default? (Q10)",
+    "options": [
+      "0",
+      "1",
+      "90",
+      "120"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which factor is considered first when a router chooses the best route? (Q11)",
+    "options": [
+      "Metric",
+      "Administrative Distance",
+      "Longest Prefix Match",
+      "Hop Count"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q12)",
+    "options": [
+      "show route ipv4",
+      "show ip interface brief",
+      "show ip route",
+      "display ip routing-table"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What prefix represents the default route in IPv4? (Q13)",
+    "options": [
+      "255.255.255.0",
+      "192.168.0.0/16",
+      "10.0.0.0/8",
+      "0.0.0.0/0"
+    ],
+    "correct": 3
+  },
+  {
+    "question": "Which routing protocol has the highest administrative distance by default? (Q14)",
+    "options": [
+      "OSPF",
+      "Static",
+      "RIP",
+      "Connected"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What metric does RIP use to select routes? (Q15)",
+    "options": [
+      "Bandwidth",
+      "Hop Count",
+      "Cost",
+      "Delay"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the purpose of the 'next hop' in a routing table? (Q16)",
+    "options": [
+      "Identifies the interface",
+      "Specifies the exit gateway",
+      "Displays the MAC address",
+      "Provides a subnet mask"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which routing table code represents a directly connected network? (Q17)",
+    "options": [
+      "S",
+      "C",
+      "O",
+      "R"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the administrative distance of a static route by default? (Q18)",
+    "options": [
+      "0",
+      "1",
+      "90",
+      "120"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which factor is considered first when a router chooses the best route? (Q19)",
+    "options": [
+      "Metric",
+      "Administrative Distance",
+      "Longest Prefix Match",
+      "Hop Count"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q20)",
+    "options": [
+      "show route ipv4",
+      "show ip interface brief",
+      "show ip route",
+      "display ip routing-table"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What prefix represents the default route in IPv4? (Q21)",
+    "options": [
+      "255.255.255.0",
+      "192.168.0.0/16",
+      "10.0.0.0/8",
+      "0.0.0.0/0"
+    ],
+    "correct": 3
+  },
+  {
+    "question": "Which routing protocol has the highest administrative distance by default? (Q22)",
+    "options": [
+      "OSPF",
+      "Static",
+      "RIP",
+      "Connected"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What metric does RIP use to select routes? (Q23)",
+    "options": [
+      "Bandwidth",
+      "Hop Count",
+      "Cost",
+      "Delay"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the purpose of the 'next hop' in a routing table? (Q24)",
+    "options": [
+      "Identifies the interface",
+      "Specifies the exit gateway",
+      "Displays the MAC address",
+      "Provides a subnet mask"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which routing table code represents a directly connected network? (Q25)",
+    "options": [
+      "S",
+      "C",
+      "O",
+      "R"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the administrative distance of a static route by default? (Q26)",
+    "options": [
+      "0",
+      "1",
+      "90",
+      "120"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which factor is considered first when a router chooses the best route? (Q27)",
+    "options": [
+      "Metric",
+      "Administrative Distance",
+      "Longest Prefix Match",
+      "Hop Count"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q28)",
+    "options": [
+      "show route ipv4",
+      "show ip interface brief",
+      "show ip route",
+      "display ip routing-table"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What prefix represents the default route in IPv4? (Q29)",
+    "options": [
+      "255.255.255.0",
+      "192.168.0.0/16",
+      "10.0.0.0/8",
+      "0.0.0.0/0"
+    ],
+    "correct": 3
+  },
+  {
+    "question": "Which routing protocol has the highest administrative distance by default? (Q30)",
+    "options": [
+      "OSPF",
+      "Static",
+      "RIP",
+      "Connected"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What metric does RIP use to select routes? (Q31)",
+    "options": [
+      "Bandwidth",
+      "Hop Count",
+      "Cost",
+      "Delay"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the purpose of the 'next hop' in a routing table? (Q32)",
+    "options": [
+      "Identifies the interface",
+      "Specifies the exit gateway",
+      "Displays the MAC address",
+      "Provides a subnet mask"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which routing table code represents a directly connected network? (Q33)",
+    "options": [
+      "S",
+      "C",
+      "O",
+      "R"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the administrative distance of a static route by default? (Q34)",
+    "options": [
+      "0",
+      "1",
+      "90",
+      "120"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which factor is considered first when a router chooses the best route? (Q35)",
+    "options": [
+      "Metric",
+      "Administrative Distance",
+      "Longest Prefix Match",
+      "Hop Count"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q36)",
+    "options": [
+      "show route ipv4",
+      "show ip interface brief",
+      "show ip route",
+      "display ip routing-table"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What prefix represents the default route in IPv4? (Q37)",
+    "options": [
+      "255.255.255.0",
+      "192.168.0.0/16",
+      "10.0.0.0/8",
+      "0.0.0.0/0"
+    ],
+    "correct": 3
+  },
+  {
+    "question": "Which routing protocol has the highest administrative distance by default? (Q38)",
+    "options": [
+      "OSPF",
+      "Static",
+      "RIP",
+      "Connected"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What metric does RIP use to select routes? (Q39)",
+    "options": [
+      "Bandwidth",
+      "Hop Count",
+      "Cost",
+      "Delay"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the purpose of the 'next hop' in a routing table? (Q40)",
+    "options": [
+      "Identifies the interface",
+      "Specifies the exit gateway",
+      "Displays the MAC address",
+      "Provides a subnet mask"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which routing table code represents a directly connected network? (Q41)",
+    "options": [
+      "S",
+      "C",
+      "O",
+      "R"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the administrative distance of a static route by default? (Q42)",
+    "options": [
+      "0",
+      "1",
+      "90",
+      "120"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which factor is considered first when a router chooses the best route? (Q43)",
+    "options": [
+      "Metric",
+      "Administrative Distance",
+      "Longest Prefix Match",
+      "Hop Count"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q44)",
+    "options": [
+      "show route ipv4",
+      "show ip interface brief",
+      "show ip route",
+      "display ip routing-table"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What prefix represents the default route in IPv4? (Q45)",
+    "options": [
+      "255.255.255.0",
+      "192.168.0.0/16",
+      "10.0.0.0/8",
+      "0.0.0.0/0"
+    ],
+    "correct": 3
+  },
+  {
+    "question": "Which routing protocol has the highest administrative distance by default? (Q46)",
+    "options": [
+      "OSPF",
+      "Static",
+      "RIP",
+      "Connected"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What metric does RIP use to select routes? (Q47)",
+    "options": [
+      "Bandwidth",
+      "Hop Count",
+      "Cost",
+      "Delay"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the purpose of the 'next hop' in a routing table? (Q48)",
+    "options": [
+      "Identifies the interface",
+      "Specifies the exit gateway",
+      "Displays the MAC address",
+      "Provides a subnet mask"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which routing table code represents a directly connected network? (Q49)",
+    "options": [
+      "S",
+      "C",
+      "O",
+      "R"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the administrative distance of a static route by default? (Q50)",
+    "options": [
+      "0",
+      "1",
+      "90",
+      "120"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which factor is considered first when a router chooses the best route? (Q51)",
+    "options": [
+      "Metric",
+      "Administrative Distance",
+      "Longest Prefix Match",
+      "Hop Count"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q52)",
+    "options": [
+      "show route ipv4",
+      "show ip interface brief",
+      "show ip route",
+      "display ip routing-table"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What prefix represents the default route in IPv4? (Q53)",
+    "options": [
+      "255.255.255.0",
+      "192.168.0.0/16",
+      "10.0.0.0/8",
+      "0.0.0.0/0"
+    ],
+    "correct": 3
+  },
+  {
+    "question": "Which routing protocol has the highest administrative distance by default? (Q54)",
+    "options": [
+      "OSPF",
+      "Static",
+      "RIP",
+      "Connected"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What metric does RIP use to select routes? (Q55)",
+    "options": [
+      "Bandwidth",
+      "Hop Count",
+      "Cost",
+      "Delay"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the purpose of the 'next hop' in a routing table? (Q56)",
+    "options": [
+      "Identifies the interface",
+      "Specifies the exit gateway",
+      "Displays the MAC address",
+      "Provides a subnet mask"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which routing table code represents a directly connected network? (Q57)",
+    "options": [
+      "S",
+      "C",
+      "O",
+      "R"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the administrative distance of a static route by default? (Q58)",
+    "options": [
+      "0",
+      "1",
+      "90",
+      "120"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which factor is considered first when a router chooses the best route? (Q59)",
+    "options": [
+      "Metric",
+      "Administrative Distance",
+      "Longest Prefix Match",
+      "Hop Count"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q60)",
+    "options": [
+      "show route ipv4",
+      "show ip interface brief",
+      "show ip route",
+      "display ip routing-table"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What prefix represents the default route in IPv4? (Q61)",
+    "options": [
+      "255.255.255.0",
+      "192.168.0.0/16",
+      "10.0.0.0/8",
+      "0.0.0.0/0"
+    ],
+    "correct": 3
+  },
+  {
+    "question": "Which routing protocol has the highest administrative distance by default? (Q62)",
+    "options": [
+      "OSPF",
+      "Static",
+      "RIP",
+      "Connected"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What metric does RIP use to select routes? (Q63)",
+    "options": [
+      "Bandwidth",
+      "Hop Count",
+      "Cost",
+      "Delay"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the purpose of the 'next hop' in a routing table? (Q64)",
+    "options": [
+      "Identifies the interface",
+      "Specifies the exit gateway",
+      "Displays the MAC address",
+      "Provides a subnet mask"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which routing table code represents a directly connected network? (Q65)",
+    "options": [
+      "S",
+      "C",
+      "O",
+      "R"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the administrative distance of a static route by default? (Q66)",
+    "options": [
+      "0",
+      "1",
+      "90",
+      "120"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which factor is considered first when a router chooses the best route? (Q67)",
+    "options": [
+      "Metric",
+      "Administrative Distance",
+      "Longest Prefix Match",
+      "Hop Count"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q68)",
+    "options": [
+      "show route ipv4",
+      "show ip interface brief",
+      "show ip route",
+      "display ip routing-table"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What prefix represents the default route in IPv4? (Q69)",
+    "options": [
+      "255.255.255.0",
+      "192.168.0.0/16",
+      "10.0.0.0/8",
+      "0.0.0.0/0"
+    ],
+    "correct": 3
+  },
+  {
+    "question": "Which routing protocol has the highest administrative distance by default? (Q70)",
+    "options": [
+      "OSPF",
+      "Static",
+      "RIP",
+      "Connected"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What metric does RIP use to select routes? (Q71)",
+    "options": [
+      "Bandwidth",
+      "Hop Count",
+      "Cost",
+      "Delay"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the purpose of the 'next hop' in a routing table? (Q72)",
+    "options": [
+      "Identifies the interface",
+      "Specifies the exit gateway",
+      "Displays the MAC address",
+      "Provides a subnet mask"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which routing table code represents a directly connected network? (Q73)",
+    "options": [
+      "S",
+      "C",
+      "O",
+      "R"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the administrative distance of a static route by default? (Q74)",
+    "options": [
+      "0",
+      "1",
+      "90",
+      "120"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which factor is considered first when a router chooses the best route? (Q75)",
+    "options": [
+      "Metric",
+      "Administrative Distance",
+      "Longest Prefix Match",
+      "Hop Count"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q76)",
+    "options": [
+      "show route ipv4",
+      "show ip interface brief",
+      "show ip route",
+      "display ip routing-table"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What prefix represents the default route in IPv4? (Q77)",
+    "options": [
+      "255.255.255.0",
+      "192.168.0.0/16",
+      "10.0.0.0/8",
+      "0.0.0.0/0"
+    ],
+    "correct": 3
+  },
+  {
+    "question": "Which routing protocol has the highest administrative distance by default? (Q78)",
+    "options": [
+      "OSPF",
+      "Static",
+      "RIP",
+      "Connected"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What metric does RIP use to select routes? (Q79)",
+    "options": [
+      "Bandwidth",
+      "Hop Count",
+      "Cost",
+      "Delay"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the purpose of the 'next hop' in a routing table? (Q80)",
+    "options": [
+      "Identifies the interface",
+      "Specifies the exit gateway",
+      "Displays the MAC address",
+      "Provides a subnet mask"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which routing table code represents a directly connected network? (Q81)",
+    "options": [
+      "S",
+      "C",
+      "O",
+      "R"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the administrative distance of a static route by default? (Q82)",
+    "options": [
+      "0",
+      "1",
+      "90",
+      "120"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which factor is considered first when a router chooses the best route? (Q83)",
+    "options": [
+      "Metric",
+      "Administrative Distance",
+      "Longest Prefix Match",
+      "Hop Count"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q84)",
+    "options": [
+      "show route ipv4",
+      "show ip interface brief",
+      "show ip route",
+      "display ip routing-table"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What prefix represents the default route in IPv4? (Q85)",
+    "options": [
+      "255.255.255.0",
+      "192.168.0.0/16",
+      "10.0.0.0/8",
+      "0.0.0.0/0"
+    ],
+    "correct": 3
+  },
+  {
+    "question": "Which routing protocol has the highest administrative distance by default? (Q86)",
+    "options": [
+      "OSPF",
+      "Static",
+      "RIP",
+      "Connected"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What metric does RIP use to select routes? (Q87)",
+    "options": [
+      "Bandwidth",
+      "Hop Count",
+      "Cost",
+      "Delay"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the purpose of the 'next hop' in a routing table? (Q88)",
+    "options": [
+      "Identifies the interface",
+      "Specifies the exit gateway",
+      "Displays the MAC address",
+      "Provides a subnet mask"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which routing table code represents a directly connected network? (Q89)",
+    "options": [
+      "S",
+      "C",
+      "O",
+      "R"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the administrative distance of a static route by default? (Q90)",
+    "options": [
+      "0",
+      "1",
+      "90",
+      "120"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which factor is considered first when a router chooses the best route? (Q91)",
+    "options": [
+      "Metric",
+      "Administrative Distance",
+      "Longest Prefix Match",
+      "Hop Count"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q92)",
+    "options": [
+      "show route ipv4",
+      "show ip interface brief",
+      "show ip route",
+      "display ip routing-table"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What prefix represents the default route in IPv4? (Q93)",
+    "options": [
+      "255.255.255.0",
+      "192.168.0.0/16",
+      "10.0.0.0/8",
+      "0.0.0.0/0"
+    ],
+    "correct": 3
+  },
+  {
+    "question": "Which routing protocol has the highest administrative distance by default? (Q94)",
+    "options": [
+      "OSPF",
+      "Static",
+      "RIP",
+      "Connected"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What metric does RIP use to select routes? (Q95)",
+    "options": [
+      "Bandwidth",
+      "Hop Count",
+      "Cost",
+      "Delay"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the purpose of the 'next hop' in a routing table? (Q96)",
+    "options": [
+      "Identifies the interface",
+      "Specifies the exit gateway",
+      "Displays the MAC address",
+      "Provides a subnet mask"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which routing table code represents a directly connected network? (Q97)",
+    "options": [
+      "S",
+      "C",
+      "O",
+      "R"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the administrative distance of a static route by default? (Q98)",
+    "options": [
+      "0",
+      "1",
+      "90",
+      "120"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which factor is considered first when a router chooses the best route? (Q99)",
+    "options": [
+      "Metric",
+      "Administrative Distance",
+      "Longest Prefix Match",
+      "Hop Count"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q100)",
+    "options": [
+      "show route ipv4",
+      "show ip interface brief",
+      "show ip route",
+      "display ip routing-table"
+    ],
+    "correct": 2
+  },
+  
+  {
+    "question": "Two routers R1 and R2 are on the same Ethernet network in area 0. R1 has IP 10.0.0.1/24 and a loopback interface with IP 192.168.1.1. R2 has IP 10.0.0.2/24 and no loopback. Both have default OSPF priorities (1). Which router becomes the Designated Router (DR) on this network?",
+    "options": [
+      "R1 (router ID 192.168.1.1)",
+      "R2 (router ID 10.0.0.2)",
+      "Neither, there is no DR on Ethernet",
+      "There will be two DRs because of the loopback"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "Three routers R1, R2, and R3 are connected to a common Ethernet segment in area 0. They all have OSPF priority 1 and area 0. Router IDs are R1: 1.1.1.1, R2: 2.2.2.2, R3: 3.3.3.3. Which routers will become the DR and BDR?",
+    "options": [
+      "DR = R1, BDR = R2",
+      "DR = R3, BDR = R2",
+      "DR = R2, BDR = R1",
+      "DR = R3, BDR = R1"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Three routers R1, R2, and R3 are on the same broadcast network. R1 has OSPF priority 0 and router ID 10.0.0.1. R2 has priority 1 and router ID 10.0.0.2. R3 has priority 1 and router ID 10.0.0.3. Assuming area 0, which routers become the DR and BDR?",
+    "options": [
+      "DR = R1, BDR = R3",
+      "DR = R3, BDR = R2",
+      "DR = R2, BDR = R3",
+      "DR = R3, BDR = none (since R1 has priority 0)"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Routers R1 and R2 are connected by a serial link configured as point-to-point in OSPF area 0. R1 has IP 10.1.1.1/30, R2 has 10.1.1.2/30. What is true about the OSPF adjacency on this link?",
+    "options": [
+      "They will form adjacency and elect R1 as DR by highest ID.",
+      "They will form adjacency with no DR/BDR on the segment.",
+      "They will remain in 2-Way state and not exchange LSDB.",
+      "They will only exchange LSAs with the DR."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Routers R1, R2, and R3 are connected in a chain with point-to-point links (R1--R2--R3). All OSPF network type point-to-point, area 0. Which OSPF neighbor relationships form full adjacency?",
+    "options": [
+      "R1-R3 and R2-R3 only",
+      "R1-R2 and R2-R3 only",
+      "R1-R2 and R1-R3 only",
+      "All pairs: R1-R2, R2-R3, and R1-R3"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Three routers R1, R2, R3 are connected via a switch in a broadcast network, area 0. All have default OSPF settings (priority 1). Their router IDs are R1:1.1.1.1, R2:2.2.2.2, R3:3.3.3.3. Which routers will become fully adjacent with each other after DR election?",
+    "options": [
+      "R1 with R2, R1 with R3; R2 and R3 remain 2-way with each other",
+      "R2 with R3; R1 with neither (since lowest ID)",
+      "All become fully adjacent with each other (since broadcast)",
+      "Only the DR becomes adjacent to others; others are 2-way with each other"
+    ],
+    "correct": 3
+  },
+  {
+    "question": "Router R1 and R2 are on the same network in area 0. R1 has OSPF hello interval set to 10 seconds, R2 has hello interval set to 5 seconds. All other OSPF settings match. What is the result for OSPF adjacency?",
+    "options": [
+      "They form a neighbor relationship but remain in 2-Way state.",
+      "They do not become neighbors at all.",
+      "They form adjacency only if one becomes DR.",
+      "They form adjacency but drop to Down after the dead timer."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Routers R1 and R2 have their interface in the same physical network. R1 is configured in OSPF area 0, R2 is configured in area 1. All other OSPF parameters match. What will be the OSPF adjacency state between them?",
+    "options": [
+      "FULL, since they are directly connected",
+      "INIT, because they see each other's hellos",
+      "No adjacency (never become neighbors)",
+      "2-WAY, with no full adjacency"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Router R1 is configured with OSPF on interface Fa0/0 but with 'passive-interface' enabled, connecting to R2 on the same network. R2 has matching OSPF network and area. What happens to the OSPF adjacency between R1 and R2?",
+    "options": [
+      "They form a full adjacency but R1 never sends LSAs.",
+      "They never form an adjacency because R1 does not send hellos.",
+      "They form adjacency only if R1 is DR.",
+      "They form adjacency but only one way."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Routers R1 and R2 share a common network segment. R1 interface type is configured as 'ip ospf network point-to-point', R2 interface is default (broadcast). Will an OSPF adjacency form between them?",
+    "options": [
+      "Yes, but they will both remain in 2-Way state.",
+      "Yes, they form FULL adjacency since it's point-to-point anyway.",
+      "No, because the network type mismatch prevents adjacency.",
+      "Yes, R1 becomes DR even though point-to-point has no DR."
+    ],
+    "correct": 2
+  },
+  {
+    "question": "R1 and R2 are on the same broadcast network. R1's 'show ip ospf neighbor' displays:\nNeighbor ID     Pri   State           Dead Time   Address         Interface\n192.168.1.2      1     FULL/DR         00:00:33    10.0.0.2       Ethernet0\nWhat can you conclude?",
+    "options": [
+      "R1 is the DR for the segment.",
+      "R2 is the DR for the segment.",
+      "R1 and R2 are in different areas.",
+      "There is no DR on the segment."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "On a broadcast network, R1's 'show ip ospf neighbor' shows a neighbor R2 in state '2WAY/ - '. What does this indicate about R2?",
+    "options": [
+      "R2 is the DR (2WAY means it's DR for another router).",
+      "R2 is neither DR nor BDR, and adjacency is not fully formed.",
+      "R2 is BDR (2WAY/ - implies backup router).",
+      "R2 is fully adjacent but hasn't exchanged LSAs yet."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "R1 has just booted up and receives a Hello from R2, listing R2's Router ID but not including R1's Router ID. Which OSPF neighbor state does R1 enter regarding R2?",
+    "options": [
+      "Down state",
+      "Init state",
+      "2-Way state",
+      "Exstart state"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Two routers on an OSPF point-to-point link have exchanged Database Description and Link State Update packets. What OSPF neighbor state do they reach when the exchange is complete?",
+    "options": [
+      "Init",
+      "2-Way",
+      "Loading",
+      "Full"
+    ],
+    "correct": 3
+  },
+  {
+    "question": "On an OSPF broadcast network, the current DR fails. At that moment, which router is elected as new DR?",
+    "options": [
+      "The router with the next highest priority.",
+      "The router with the highest router ID among remaining routers.",
+      "The router with the lowest router ID to avoid loops.",
+      "The router that became adjacent last."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "A router on a multi-access network is configured with 'ip ospf priority 0'. What is the effect on DR/BDR election?",
+    "options": [
+      "It will become the DR regardless of ID.",
+      "It will never become DR or BDR.",
+      "It becomes DR only if no other router is available.",
+      "It becomes BDR but not DR."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which statement about OSPF neighbor adjacency is correct regarding network types?",
+    "options": [
+      "On point-to-point networks, routers only form adjacency with DR/BDR.",
+      "On broadcast networks, routers form adjacency with all neighbors.",
+      "On point-to-point networks, all neighbors become fully adjacent.",
+      "On broadcast networks, routers never use a DR/BDR election."
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which OSPF network type uses a DR/BDR election process?",
+    "options": [
+      "Point-to-point",
+      "Broadcast and NBMA",
+      "Point-to-multipoint",
+      "Non-broadcast and point-to-multipoint"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "An OSPF router has a serial interface configured as 'ip ospf network point-to-multipoint'. How are adjacencies formed on this interface type?",
+    "options": [
+      "With all neighbors, no DR election (like P2P).",
+      "Only with the DR/BDR because it's multi-access.",
+      "No adjacency is formed by default.",
+      "It uses NBMA rules to elect DR/BDR."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "Which of the following will cause two OSPF routers to only form a 2-WAY state but not FULL adjacency?",
+    "options": [
+      "They are on a point-to-point link.",
+      "They have different area IDs.",
+      "One of them has higher OSPF priority.",
+      "They are on a multi-access network and neither is DR/BDR."
+    ],
+    "correct": 3
+  },
+  {
+    "question": "Given the following 'show ip ospf interface' output on R1:\nEthernet0/0 is up, line protocol is up\n  Internet Address 192.168.10.1/24, Area 0\n  Process ID 1, Router ID 192.168.10.1, Network Type BROADCAST\nWhich statement is true based on this output?",
+    "options": [
+      "This interface will elect a DR/BDR with other routers on the link.",
+      "This interface is point-to-point and will not elect DR.",
+      "This interface is not participating in OSPF.",
+      "The router ID is automatically chosen because none was configured."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "Router R1 has IP 192.168.1.1/24, R2 has IP 192.168.1.2/24 on same LAN. R1 config: 'network 192.168.1.0 0.0.0.255 area 0'. R2 config: 'network 192.168.2.0 0.0.0.255 area 0'. Will R1 and R2 become OSPF neighbors?",
+    "options": [
+      "Yes, because they have matching areas.",
+      "No, because their network statements do not include the LAN.",
+      "Yes, but only one-way adjacencies form.",
+      "No, because their IP addresses are different."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "In a network of four routers on an Ethernet segment, Router A is elected DR, Router B is BDR. Routers C and D are others. Which statement is true regarding adjacency?",
+    "options": [
+      "C and D are fully adjacent with each other, but only 2-way with A and B.",
+      "A, B, C, D all have full adjacency with each other.",
+      "C and D will only form adjacency with A and B, not with each other.",
+      "C and D will not see each other at all."
+    ],
+    "correct": 2
+  },
+  {
+    "question": "R1 is connected to R2 and R3 via separate point-to-multipoint OSPF links, area 0. What will be the adjacency state with R1 for R2 and R3?",
+    "options": [
+      "R2 and R3 will be DR and BDR respectively.",
+      "R1 will have full adjacency with both R2 and R3 (no DR/BDR on P2MP).",
+      "R2 and R3 will remain in 2-Way state with R1.",
+      "R1 can only fully adjacently communicate with one of R2 or R3 at a time."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Router R1 and R2 configure OSPF area 0 and manually set Router ID 1.1.1.1 on both. They are connected on the same network. What is the effect?",
+    "options": [
+      "They will elect one as DR based on highest interface IP.",
+      "They will form adjacency but LSDB will be unsynchronized.",
+      "They will not become OSPF neighbors.",
+      "They will both become DR and BDR."
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Router R1 has interfaces FastEthernet0/0 = 10.0.0.1/24, FastEthernet0/1 = 10.0.1.1/24, no loopbacks. R1 starts OSPF without manual router-id. What router ID does it select?",
+    "options": [
+      "10.0.0.1",
+      "10.0.1.1",
+      "255.255.255.255 (default)",
+      "It stays 0.0.0.0 since none configured"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Router R1 has no physical IP but has loopback0 = 10.10.10.10. It runs OSPF with no manual router-id. What router ID is chosen?",
+    "options": [
+      "0.0.0.0",
+      "10.10.10.10",
+      "Highest IP reachable in network",
+      "10.0.0.1 (first active interface)"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Router R1 has router-id set to 2.2.2.2 manually in OSPF. It also has loopback 5.5.5.5. What is its router ID?",
+    "options": [
+      "5.5.5.5, since it\u2019s higher than 2.2.2.2",
+      "2.2.2.2, because manual override loopbacks",
+      "0.0.0.0 until restart",
+      "2.2.2.2 only if area is 0"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Router R1 uses router ID 192.168.100.100 (a loopback) in OSPF. R2 has loopback 192.168.200.200 and they are not directly connected. Can R1 and R2 form an adjacency?",
+    "options": [
+      "Yes, router IDs need not be reachable to form adjacency.",
+      "No, router ID must be reachable in OSPF for adjacency.",
+      "Yes, but only if area 0 is configured on both.",
+      "No, because they do not share a network."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "On an OSPF broadcast network with default timers, if Hello interval is 10 seconds, what is the Dead interval?",
+    "options": [
+      "10 seconds",
+      "20 seconds",
+      "30 seconds",
+      "40 seconds"
+    ],
+    "correct": 3
+  },
+  {
+    "question": "Which OSPF network type behaves like broadcast and elects a DR, even if no broadcast support is present?",
+    "options": [
+      "Point-to-point",
+      "Point-to-multipoint",
+      "Non-broadcast multi-access (NBMA)",
+      "Loopback"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Routers R1, R2, R3 are on an Ethernet segment. R1 is DR, R2 is BDR, R3 is DROTHER. If R1 fails, what happens next?",
+    "options": [
+      "R3 automatically becomes DR (highest RID among DROTHERs).",
+      "R2 becomes DR and then a new BDR election occurs.",
+      "No new DR is elected until R1 returns.",
+      "R2 stays BDR and R3 becomes DR."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "During OSPF neighbor formation, routers exchange Hello packets. Which of the following is included in a Hello packet?",
+    "options": [
+      "The entire Link State Database",
+      "List of known OSPF neighbors' Router IDs",
+      "Default gateway IP",
+      "OSPF area owner list"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Router R1 has priority 2, R2 has priority 1, R3 has priority 1 on a broadcast network. All in area 0. If router IDs R1:1.1.1.1, R2:2.2.2.2, R3:3.3.3.3, who will be DR and BDR?",
+    "options": [
+      "DR=R3, BDR=R1",
+      "DR=R1, BDR=R3",
+      "DR=R1, BDR=R2",
+      "DR=R3, BDR=R2"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "On a multi-access OSPF network, under what condition does a non-DR router reach FULL adjacency with another router?",
+    "options": [
+      "If they are the first two routers to boot",
+      "Only when the other router is DR or BDR",
+      "When they have matching OSPF cost",
+      "If the hello packets carry duplicate OSPF options"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Two routers R1 and R2 formed full OSPF adjacency on 10.0.0.0/24. R1 changes its IP to 10.0.1.1/24 and resets OSPF. What happens to the adjacency?",
+    "options": [
+      "They remain neighbors but change area.",
+      "They lose adjacency until new hello on shared network appears.",
+      "They remain full until manual reset on R2.",
+      "R2 becomes DR by default."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Router R1 configures 'ip ospf network point-to-multipoint' and R2 configures 'ip ospf network broadcast' on the same link. Which is true?",
+    "options": [
+      "They will negotiate and use broadcast mode.",
+      "They will negotiate and use point-to-multipoint mode.",
+      "They will not form adjacency due to type mismatch.",
+      "R1 becomes DR and R2 becomes BDR by default."
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Routers R1 and R2 manually set their OSPF router-ids to 10.10.10.10 and 10.10.10.11 respectively. They are directly connected in area 0. Which is true?",
+    "options": [
+      "They will elect one as DR by higher RID.",
+      "They will form adjacency since IDs are unique.",
+      "They will not form adjacency due to manual IDs.",
+      "They will use both IDs interchangeably."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "In OSPF Hello packets, the DR and BDR fields indicate known DR/BDR. What happens if a new router declares itself as DR in its Hello packet when a valid DR/BDR pair exists?",
+    "options": [
+      "All routers will accept the new DR because its Hello wins.",
+      "Routers ignore the new declaration and continue with current DR/BDR.",
+      "BDR immediately becomes DR based on the new Hello.",
+      "The network goes into a new election immediately."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "When an OSPF process starts on a router without a configured router-id, how is the router-id first determined?",
+    "options": [
+      "The highest IP of any active interface (including loopbacks).",
+      "The lowest IP of any interface, to avoid conflicts.",
+      "Randomly chosen from available addresses.",
+      "It remains undefined until a manual command."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "Which statement correctly describes an OSPF point-to-point network type?",
+    "options": [
+      "No DR/BDR is elected and the two routers establish adjacency with each other.",
+      "DR and BDR are elected and all routers form adjacency only with DR/BDR.",
+      "OSPF multicasts are not used on point-to-point links.",
+      "Hello packets are sent every 30 seconds by default on point-to-point links."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "On an OSPF broadcast multi-access network, which routers form FULL adjacency with each other?",
+    "options": [
+      "All routers form FULL adjacency with all other routers.",
+      "Only the DR forms FULL adjacency with the BDR; others are only 2-WAY with each other.",
+      "Each router only forms adjacency with one designated neighbor.",
+      "Routers form FULL adjacency randomly based on priority."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "In OSPF, what is true when a neighbor is seen as '2-Way' on a broadcast segment?",
+    "options": [
+      "They have fully synchronized their databases.",
+      "They have bidirectional Hello communication but are not necessarily exchanging LSAs.",
+      "One of them is DR and the other is DROTHER.",
+      "It indicates a mismatched area ID."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which of the following must match on two routers for OSPF to form a neighbor adjacency?",
+    "options": [
+      "Hello and Dead intervals, and Area ID",
+      "Router IDs, and Interface IP addresses",
+      "Hello interval and Router ID",
+      "IP subnet mask, and Autonomous System number"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "If an OSPF router's interface priority is set to 0, what is the effect?",
+    "options": [
+      "It will become DR automatically.",
+      "It will never become DR or BDR.",
+      "It will only become BDR if no DR is available.",
+      "It excludes itself from adjacency formation."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "When an OSPF process starts without a manually configured router ID, what is the first criterion it uses for selecting the router ID?",
+    "options": [
+      "Highest IP address on any active interface",
+      "Highest IP address on a loopback interface",
+      "Lowest IP address on any active interface",
+      "Highest default gateway IP"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What happens if two OSPF routers in the same area are configured with the same router ID?",
+    "options": [
+      "They will elect one to shut down to avoid conflict.",
+      "They will not form an adjacency.",
+      "They will form adjacency but cause a routing loop.",
+      "They will adjust one of the IDs automatically."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "If two routers on a broadcast network have the same OSPF priority, how is the DR selected?",
+    "options": [
+      "The one with the lowest MAC address wins.",
+      "The one with the highest router ID wins.",
+      "The one configured first in the network becomes DR.",
+      "They will run an STP-like algorithm to decide."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which multicast address do OSPF routers use to send Hello packets to all other OSPF routers on a segment?",
+    "options": [
+      "224.0.0.5",
+      "224.0.0.6",
+      "255.255.255.255",
+      "224.0.0.9"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "In OSPF, what neighbor state indicates that two routers have completely exchanged their link-state databases?",
+    "options": [
+      "2-Way",
+      "Exstart",
+      "Full",
+      "Loading"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which OSPF network type by default will use unicast hellos instead of multicast?",
+    "options": [
+      "Point-to-point",
+      "Broadcast",
+      "Non-broadcast (NBMA)",
+      "Point-to-multipoint"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which type of network is typically considered non-broadcast by OSPF and requires manual neighbor configuration?",
+    "options": [
+      "Ethernet",
+      "Frame Relay NBMA",
+      "Serial point-to-point",
+      "Loopback"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "After OSPF DR and BDR are elected on a multi-access network, which routers share LSAs with which neighbors?",
+    "options": [
+      "All routers share LSAs with all other routers.",
+      "DROTHER routers only share LSAs with DR and BDR.",
+      "BDR shares with DR, but DROTHER does not share LSAs.",
+      "Only the DR shares LSAs, others just forward them."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the default OSPF priority on Cisco routers for DR election?",
+    "options": [
+      "0",
+      "1",
+      "128",
+      "255"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which OSPF neighbor state indicates a router has sent a hello but not yet received any hellos back from the neighbor?",
+    "options": [
+      "Down",
+      "Init",
+      "Exstart",
+      "Full"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What is the purpose of the OSPF dead interval?",
+    "options": [
+      "To determine how often hello packets are sent.",
+      "To define how long to wait before declaring a neighbor dead.",
+      "To specify how long the router should remain DR after election.",
+      "To define how long routers wait before becoming DR."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Two routers are directly connected with OSPF area 0, but they do not see each other as neighbors. Which is a likely cause?",
+    "options": [
+      "Different AS numbers configured.",
+      "Matching hello intervals.",
+      "Area ID mismatch between routers.",
+      "Both routers are set to passive-interface."
+    ],
+    "correct": 2
+  },
+  {
+    "question": "On a multi-access OSPF network, router election for DR is based on priority and then router ID. If Router A has priority 1 and ID 1.1.1.1, and Router B has priority 1 and ID 2.2.2.2, which router becomes DR?",
+    "options": [
+      "Router A, because 1.1.1.1 < 2.2.2.2",
+      "Router B, because it has the higher router ID 2.2.2.2",
+      "Neither, they will share the DR role.",
+      "They become DR only after adjacencies form."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "On an OSPF NBMA network, how many adjacencies are formed?",
+    "options": [
+      "Full mesh, all routers full adjacency.",
+      "Only DR-BDR and DROTHER neighbors form adjacencies.",
+      "Adjacent only to manually configured neighbors (subnet tree adjacency).",
+      "None, because NBMA doesn't support OSPF adjacency."
+    ],
+    "correct": 2
+  },
+  {
+    "question": "In OSPF, which neighbor state is achieved immediately after two routers have confirmed bidirectional communication but before DB descriptor exchange?",
+    "options": [
+      "2-Way",
+      "Exstart",
+      "Loading",
+      "Full"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What is the final tiebreaker in the OSPF DR/BDR election process on a broadcast network?",
+    "options": [
+      "Highest IP address of any interface",
+      "Highest router ID",
+      "Lowest loopback address",
+      "Lowest priority"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which statement is correct about an OSPF router with priority 0 on an interface?",
+    "options": [
+      "It can become the BDR but not DR.",
+      "It sends hello only to the DR.",
+      "It is excluded from DR/BDR elections.",
+      "It is the only one that can become DR."
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What is the effect of configuring 'passive-interface' on an OSPF router interface?",
+    "options": [
+      "It prevents OSPF route advertisements through that interface.",
+      "It prevents the interface from sending OSPF Hello packets.",
+      "It sets the interface priority to 0.",
+      "It shuts down the interface."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "For OSPF on broadcast networks, what are the default Hello and Dead intervals respectively?",
+    "options": [
+      "30s Hello, 120s Dead",
+      "10s Hello, 40s Dead",
+      "5s Hello, 20s Dead",
+      "60s Hello, 240s Dead"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "If two routers on the same segment have mismatched OSPF network types (one point-to-point, the other broadcast), what happens?",
+    "options": [
+      "They form adjacency using the more restrictive type (point-to-point).",
+      "They do not form any OSPF adjacency.",
+      "They negotiate to use point-to-multipoint instead.",
+      "They form adjacency but election fails."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which of the following is NOT a prerequisite for two OSPF routers to become neighbors?",
+    "options": [
+      "Matching area ID",
+      "Matching authentication type and password",
+      "Matching IP addresses",
+      "Matching Hello and Dead timers"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which of these factors is not considered in the standard OSPF DR election on a broadcast network?",
+    "options": [
+      "OSPF priority value",
+      "Highest router ID",
+      "Interface bandwidth",
+      "Manually configured router ID"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which OSPF neighbor state sequence is correct from initial to full adjacency?",
+    "options": [
+      "Init, 2-Way, Exstart, Exchange, Loading, Full",
+      "Down, Init, 2-Way, Exstart, Exchange, Loading, Full",
+      "Down, Init, Full, Exchange, Loading",
+      "2-Way, Exstart, Exchange, Loading, Full"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What OSPF neighbor state indicates that a router has received a hello packet with its own router ID in the neighbor field?",
+    "options": [
+      "Down",
+      "Init",
+      "2-Way",
+      "Full"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "In OSPF, which state indicates that a neighboring router has not seen any hellos from the local router?",
+    "options": [
+      "Down",
+      "Init",
+      "Attempt",
+      "Exstart"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "Which router on a broadcast network will be elected DR if its priority is highest among all neighbors?",
+    "options": [
+      "The one with lowest ID and highest priority.",
+      "The one with highest priority, with ties broken by highest ID.",
+      "The one with highest MAC address.",
+      "The one that started OSPF process first."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "True or False: An OSPF router ID must be assigned to an interface to be used.",
+    "options": [
+      "True",
+      "False",
+      "It depends on OSPF version",
+      "Only in multi-area OSPF"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which of the following IP addresses would be chosen as the OSPF router ID (with no manual ID) among a router's active addresses 10.1.1.1 and 10.10.10.10?",
+    "options": [
+      "10.1.1.1",
+      "10.10.10.10",
+      "The router ID is randomly selected.",
+      "It remains 0.0.0.0 until configured."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "A new router with highest priority joins an already converged broadcast OSPF network. What happens to DR/BDR roles?",
+    "options": [
+      "New router becomes DR immediately regardless of ID.",
+      "Nothing happens until the DR fails or a re-election is triggered.",
+      "DR and BDR are re-elected immediately to include the new router.",
+      "The new router becomes BDR, and existing DR stays DR."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which statement about OSPF neighbor adjacency is correct?",
+    "options": [
+      "On broadcast networks, full adjacency only occurs with the DR and BDR.",
+      "Routers will become neighbors if connected to the same router.",
+      "OSPF adjacency formation is independent of interface type.",
+      "On point-to-multipoint networks, no DR election is done."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "Which of the following is required for two OSPF routers to form an adjacency (rather than just become neighbors)?",
+    "options": [
+      "They must both be DR/BDR on a broadcast network or be on a non-broadcast link.",
+      "They must have the same loopback address.",
+      "They must share the same router ID.",
+      "They must be configured with the same process ID only."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "On a broadcast OSPF network, Router1 has OSPF priority 2, Router2 has priority 1. Router2 has a higher router ID. Who becomes DR?",
+    "options": [
+      "Router1, because priority 2 is higher than 1",
+      "Router2, because router ID breaks the tie",
+      "Neither, DR election will consider router ID first",
+      "They both become DR in different subnets"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "If a router's OSPF neighbor output shows a neighbor with ID 0.0.0.0, what does this indicate?",
+    "options": [
+      "The neighbor has no router ID set.",
+      "The adjacency has not progressed past the Down state.",
+      "The neighbor is DR.",
+      "This is a broadcast flood address for initial hellos."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which packet type is used by OSPF routers during adjacency formation to exchange the entire link-state database?",
+    "options": [
+      "Hello packets",
+      "Link-state update packets",
+      "Link-state acknowledgment packets",
+      "Database description packets"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "During OSPF adjacency formation, which state comes immediately after the '2-Way' state?",
+    "options": [
+      "Init",
+      "Exstart",
+      "Loading",
+      "Down"
+    ],
+    "correct": 1
+  }
+]
+
+        let currentQuestion = 0;
+        let selectedAnswers = new Array(questions.length).fill(null);
+        let score = 0;
+
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            
+            document.getElementById('question-number').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+            document.getElementById('question').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                optionElement.onclick = () => selectOption(index);
+                
+                if (selectedAnswers[currentQuestion] === index) {
+                    optionElement.classList.add('selected');
+                }
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            updateProgress();
+            updateButtons();
+        }
+
+        function selectOption(index) {
+            selectedAnswers[currentQuestion] = index;
+            
+            const options = document.querySelectorAll('.option');
+            options.forEach((option, i) => {
+                option.classList.toggle('selected', i === index);
+            });
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            prevBtn.style.display = currentQuestion === 0 ? 'none' : 'block';
+            nextBtn.textContent = currentQuestion === questions.length - 1 ? 'Finish' : 'Next';
+        }
+
+        function finishQuiz() {
+            calculateScore();
+            showResults();
+        }
+
+        function calculateScore() {
+            score = 0;
+            for (let i = 0; i < questions.length; i++) {
+                if (selectedAnswers[i] === questions[i].correct) {
+                    score++;
+                }
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('results-container').classList.remove('hidden');
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            document.getElementById('score-percentage').textContent = percentage + '%';
+            document.getElementById('correct-answers').textContent = score;
+            document.getElementById('incorrect-answers').textContent = questions.length - score;
+            document.getElementById('total-questions').textContent = questions.length;
+            
+            // Update score circle gradient
+            const scoreCircle = document.querySelector('.score-circle');
+            const degrees = (percentage / 100) * 360;
+            scoreCircle.style.background = `conic-gradient(#667eea 0deg, #764ba2 ${degrees}deg, #e9ecef ${degrees}deg)`;
+            
+            // Show wrong answers review
+            showWrongAnswers();
+        }
+
+        function showWrongAnswers() {
+            const wrongAnswersList = document.getElementById('wrong-answers-list');
+            const wrongAnswersSection = document.getElementById('wrong-answers-section');
+            wrongAnswersList.innerHTML = '';
+            
+            let hasWrongAnswers = false;
+            
+            for (let i = 0; i < questions.length; i++) {
+                if (selectedAnswers[i] !== questions[i].correct) {
+                    hasWrongAnswers = true;
+                    const wrongItem = document.createElement('div');
+                    wrongItem.className = 'wrong-answer-item';
+                    
+                    wrongItem.innerHTML = `
+                        <div class="wrong-question">Q${i + 1}: ${questions[i].question}</div>
+                        <div class="answer-review">
+                            <div class="answer-label wrong-label">Your Answer:</div>
+                            <div class="answer-option wrong-answer">
+                                ${selectedAnswers[i] !== null ? questions[i].options[selectedAnswers[i]] : 'Not answered'}
+                            </div>
+                            <div class="answer-label correct-label">Correct Answer:</div>
+                            <div class="answer-option correct-answer">
+                                ${questions[i].options[questions[i].correct]}
+                            </div>
+                        </div>
+                    `;
+                    
+                    wrongAnswersList.appendChild(wrongItem);
+                }
+            }
+            
+            // Hide the wrong answers section if all answers are correct
+            if (!hasWrongAnswers) {
+                wrongAnswersSection.style.display = 'none';
+            } else {
+                wrongAnswersSection.style.display = 'block';
+            }
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            selectedAnswers = new Array(questions.length).fill(null);
+            score = 0;
+            
+            document.getElementById('results-container').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            
+            loadQuestion();
+        }
+
+        // Initialize the quiz
+        document.addEventListener('DOMContentLoaded', function() {
+            loadQuestion();
+        });
+    </script>
+</body>
+</html>
