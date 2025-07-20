@@ -419,258 +419,138 @@
     <script>
         // Sample MCQ questions - fixed JSON format
         const questions = [
-          {
-    "question": "Which routing table code represents a directly connected network?",
+  {
+    "question": "In a Cisco routing table, what does the code 'C' indicate?",
     "options": [
-      "S",
+      "Connected route",
+      "Static route", 
+      "OSPF route",
+      "RIP route"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "Which code represents a statically configured route in the routing table?",
+    "options": [
       "C",
-      "O",
+      "S",
+      "O", 
       "R"
     ],
     "correct": 1
   },
   {
-    "question": "What is the administrative distance of a static route by default?",
+    "question": "In Cisco IOS, the letter 'D' in a routing table entry means the route was learned via:",
     "options": [
-      "0",
-      "1",
-      "90",
-      "120"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which factor is considered first when a router chooses the best route?",
-    "options": [
-      "Metric",
-      "Administrative Distance",
-      "Longest Prefix Match",
-      "Hop Count"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "Which command shows the IPv4 routing table in Cisco IOS?",
-    "options": [
-      "show route ipv4",
-      "show ip interface brief",
-      "show ip route",
-      "display ip routing-table"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What prefix represents the default route in IPv4?",
-    "options": [
-      "255.255.255.0",
-      "192.168.0.0/16",
-      "10.0.0.0/8",
-      "0.0.0.0/0"
+      "OSPF",
+      "BGP",
+      "RIP",
+      "EIGRP"
     ],
     "correct": 3
   },
   {
-    "question": "Which routing protocol has the highest administrative distance by default?",
+    "question": "What does the code 'R' stand for in a Cisco routing table?",
     "options": [
-      "OSPF",
-      "Static",
-      "RIP",
-      "Connected"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What metric does RIP use to select routes?",
-    "options": [
-      "Bandwidth",
-      "Hop Count",
-      "Cost",
-      "Delay"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the purpose of the 'next hop' in a routing table?",
-    "options": [
-      "Identifies the interface",
-      "Specifies the exit gateway",
-      "Displays the MAC address",
-      "Provides a subnet mask"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which routing table code represents a directly connected network? (Q9)",
-    "options": [
-      "S",
-      "C",
-      "O",
-      "R"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the administrative distance of a static route by default? (Q10)",
-    "options": [
-      "0",
-      "1",
-      "90",
-      "120"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which factor is considered first when a router chooses the best route? (Q11)",
-    "options": [
-      "Metric",
-      "Administrative Distance",
-      "Longest Prefix Match",
-      "Hop Count"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q12)",
-    "options": [
-      "show route ipv4",
-      "show ip interface brief",
-      "show ip route",
-      "display ip routing-table"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What prefix represents the default route in IPv4? (Q13)",
-    "options": [
-      "255.255.255.0",
-      "192.168.0.0/16",
-      "10.0.0.0/8",
-      "0.0.0.0/0"
+      "Static route",
+      "Connected route",
+      "OSPF route",
+      "RIP route"
     ],
     "correct": 3
   },
   {
-    "question": "Which routing protocol has the highest administrative distance by default? (Q14)",
+    "question": "In the routing table, the letter 'O' before a route prefix signifies a route learned by:",
     "options": [
-      "OSPF",
-      "Static",
+      "EIGRP",
+      "BGP",
       "RIP",
-      "Connected"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What metric does RIP use to select routes? (Q15)",
-    "options": [
-      "Bandwidth",
-      "Hop Count",
-      "Cost",
-      "Delay"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the purpose of the 'next hop' in a routing table? (Q16)",
-    "options": [
-      "Identifies the interface",
-      "Specifies the exit gateway",
-      "Displays the MAC address",
-      "Provides a subnet mask"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which routing table code represents a directly connected network? (Q17)",
-    "options": [
-      "S",
-      "C",
-      "O",
-      "R"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the administrative distance of a static route by default? (Q18)",
-    "options": [
-      "0",
-      "1",
-      "90",
-      "120"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which factor is considered first when a router chooses the best route? (Q19)",
-    "options": [
-      "Metric",
-      "Administrative Distance",
-      "Longest Prefix Match",
-      "Hop Count"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q20)",
-    "options": [
-      "show route ipv4",
-      "show ip interface brief",
-      "show ip route",
-      "display ip routing-table"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What prefix represents the default route in IPv4? (Q21)",
-    "options": [
-      "255.255.255.0",
-      "192.168.0.0/16",
-      "10.0.0.0/8",
-      "0.0.0.0/0"
+      "OSPF"
     ],
     "correct": 3
   },
   {
-    "question": "Which routing protocol has the highest administrative distance by default? (Q22)",
+    "question": "Which route code is used for routes learned by BGP?",
     "options": [
-      "OSPF",
-      "Static",
-      "RIP",
-      "Connected"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What metric does RIP use to select routes? (Q23)",
-    "options": [
-      "Bandwidth",
-      "Hop Count",
-      "Cost",
-      "Delay"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the purpose of the 'next hop' in a routing table? (Q24)",
-    "options": [
-      "Identifies the interface",
-      "Specifies the exit gateway",
-      "Displays the MAC address",
-      "Provides a subnet mask"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which routing table code represents a directly connected network? (Q25)",
-    "options": [
-      "S",
-      "C",
       "O",
-      "R"
+      "B",
+      "R",
+      "D"
     ],
     "correct": 1
   },
   {
-    "question": "What is the administrative distance of a static route by default? (Q26)",
+    "question": "What does the 'L' code indicate in a Cisco routing table?",
+    "options": [
+      "A loopback route",
+      "A local route to the router's interface",
+      "A link-local route",
+      "A last resort route"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which of the following is a component of a routing table entry?",
+    "options": [
+      "Next hop IP address",
+      "MAC address of destination",
+      "Payload data",
+      "Interface bandwidth"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "In routing table terms, what does the 'prefix' refer to?",
+    "options": [
+      "Network address with prefix length",
+      "Host portion of the IP address",
+      "Router's hostname",
+      "Default gateway address"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "In the entry '192.168.1.0/24', what does '/24' indicate?",
+    "options": [
+      "24 bits of subnet mask",
+      "24 hosts",
+      "24 networks", 
+      "24 default routes"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What does the 'next hop' field specify in a routing table entry?",
+    "options": [
+      "The IP of the next-hop router",
+      "The final destination IP",
+      "The local outgoing interface",
+      "The network mask"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What is the purpose of the administrative distance (AD) in a routing table?",
+    "options": [
+      "To select the most trusted route among multiple sources",
+      "To measure the physical distance of a link",
+      "To calculate bandwidth cost",
+      "To specify the default gateway"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "If a router has both a static route (AD 1) and an OSPF route (AD 110) to the same network, which route will be chosen?",
+    "options": [
+      "Static route",
+      "OSPF route",
+      "Both (load balance)",
+      "Neither (loop prevention)"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What is the default administrative distance of a static route on Cisco routers?",
     "options": [
       "0",
       "1",
@@ -680,746 +560,365 @@
     "correct": 1
   },
   {
-    "question": "Which factor is considered first when a router chooses the best route? (Q27)",
+    "question": "What is the default administrative distance of a directly connected network?",
     "options": [
-      "Metric",
-      "Administrative Distance",
-      "Longest Prefix Match",
-      "Hop Count"
+      "0",
+      "1",
+      "90",
+      "120"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "In a routing table, what does the 'metric' field represent?",
+    "options": [
+      "The cost assigned by the routing protocol",
+      "The administrative distance",
+      "The default gateway IP",
+      "The number of routers along the path"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "Which routing protocol uses hop count as its metric?",
+    "options": [
+      "RIP",
+      "OSPF",
+      "EIGRP",
+      "BGP"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What is the 'gateway of last resort' on a router?",
+    "options": [
+      "The default route for packets with no specific match",
+      "The directly connected network",
+      "The route with the highest metric",
+      "The most trusted route"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "If a router's IP is 172.16.5.10 with mask 255.255.0.0, what is the network prefix in CIDR notation?",
+    "options": [
+      "172.16.5.0/16",
+      "172.16.0.0/16",
+      "172.0.0.0/8",
+      "172.16.5.0/24"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the default administrative distance of OSPF?",
+    "options": [
+      "90",
+      "100",
+      "110",
+      "120"
     ],
     "correct": 2
   },
   {
-    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q28)",
+    "question": "What is the default administrative distance of RIP?",
     "options": [
-      "show route ipv4",
-      "show ip interface brief",
-      "show ip route",
-      "display ip routing-table"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What prefix represents the default route in IPv4? (Q29)",
-    "options": [
-      "255.255.255.0",
-      "192.168.0.0/16",
-      "10.0.0.0/8",
-      "0.0.0.0/0"
+      "90",
+      "100",
+      "110",
+      "120"
     ],
     "correct": 3
   },
   {
-    "question": "Which routing protocol has the highest administrative distance by default? (Q30)",
+    "question": "What is the default administrative distance of internal EIGRP?",
     "options": [
-      "OSPF",
-      "Static",
-      "RIP",
-      "Connected"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What metric does RIP use to select routes? (Q31)",
-    "options": [
-      "Bandwidth",
-      "Hop Count",
-      "Cost",
-      "Delay"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the purpose of the 'next hop' in a routing table? (Q32)",
-    "options": [
-      "Identifies the interface",
-      "Specifies the exit gateway",
-      "Displays the MAC address",
-      "Provides a subnet mask"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which routing table code represents a directly connected network? (Q33)",
-    "options": [
-      "S",
-      "C",
-      "O",
-      "R"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the administrative distance of a static route by default? (Q34)",
-    "options": [
-      "0",
-      "1",
       "90",
+      "100",
+      "110",
       "120"
     ],
-    "correct": 1
+    "correct": 0
   },
   {
-    "question": "Which factor is considered first when a router chooses the best route? (Q35)",
+    "question": "In a static route entry shown as [1/0], what do the '1' and '0' represent respectively?",
     "options": [
-      "Metric",
-      "Administrative Distance",
-      "Longest Prefix Match",
-      "Hop Count"
+      "Administrative distance = 1, Metric = 0",
+      "Administrative distance = 0, Metric = 1",
+      "Hop count = 1, Bandwidth = 0",
+      "Hop count = 0, Metric = 1"
     ],
-    "correct": 2
+    "correct": 0
   },
   {
-    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q36)",
+    "question": "Which prefix represents the default IPv4 route matching all addresses?",
     "options": [
-      "show route ipv4",
-      "show ip interface brief",
-      "show ip route",
-      "display ip routing-table"
+      "0.0.0.0/0",
+      "255.255.255.255/32",
+      "128.0.0.0/1",
+      "10.0.0.0/8"
     ],
-    "correct": 2
+    "correct": 0
   },
   {
-    "question": "What prefix represents the default route in IPv4? (Q37)",
+    "question": "In the output of show ip route, which symbol indicates the default static route (gateway of last resort)?",
     "options": [
-      "255.255.255.0",
+      "S*",
+      "S",
+      "C*",
+      "D"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "Which prefix length identifies a host route (single IP) in IPv4?",
+    "options": [
+      "/32",
+      "/24",
+      "/16",
+      "/8"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What does 'longest prefix match' mean in routing?",
+    "options": [
+      "Choose the route with the most specific subnet mask",
+      "Choose the route with the highest administrative distance",
+      "Choose the route with the greatest number of hops",
+      "Choose the route with the shortest mask"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "If a packet's destination is 192.168.1.50, and the router has routes for 192.168.0.0/16 and 192.168.1.0/24, which route is chosen?",
+    "options": [
+      "192.168.1.0/24",
       "192.168.0.0/16",
-      "10.0.0.0/8",
-      "0.0.0.0/0"
+      "Both are used equally",
+      "Packet is dropped"
     ],
-    "correct": 3
+    "correct": 0
   },
   {
-    "question": "Which routing protocol has the highest administrative distance by default? (Q38)",
+    "question": "If no route matches a packet's destination and no default route exists, what happens to the packet?",
     "options": [
-      "OSPF",
-      "Static",
-      "RIP",
-      "Connected"
+      "It is dropped or an ICMP unreachable is sent",
+      "It is broadcast on all interfaces",
+      "It is sent back to the source",
+      "It is forwarded to a random route"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "When two routes have the same longest prefix length, which factor is used next to select the route?",
+    "options": [
+      "Lowest administrative distance",
+      "Highest metric",
+      "Longest AS path",
+      "Shortest interface name"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "If two routes have the same prefix length and the same AD, what is considered next?",
+    "options": [
+      "Administrative distance",
+      "Hop count",
+      "Metric (routing cost)",
+      "Gateway address"
     ],
     "correct": 2
   },
   {
-    "question": "What metric does RIP use to select routes? (Q39)",
+    "question": "If two routes are identical in prefix length, AD, and metric, how does a Cisco router handle them?",
     "options": [
-      "Bandwidth",
-      "Hop Count",
-      "Cost",
-      "Delay"
+      "It installs only one route arbitrarily",
+      "It installs both and load-balances traffic",
+      "It discards both routes",
+      "It waits until one goes down"
     ],
     "correct": 1
   },
   {
-    "question": "What is the purpose of the 'next hop' in a routing table? (Q40)",
+    "question": "Which command configures an IPv4 static route to reach 10.10.10.0/24 via 192.168.100.1?",
     "options": [
-      "Identifies the interface",
-      "Specifies the exit gateway",
-      "Displays the MAC address",
-      "Provides a subnet mask"
+      "ip route 10.10.10.0 255.255.255.0 192.168.100.1",
+      "ip route 10.10.10.0/24 192.168.100.1",
+      "ip route 10.10.10.1 255.255.255.0 192.168.100.1",
+      "ip route 10.10.10.0 255.255.0.0 192.168.100.1"
     ],
-    "correct": 1
+    "correct": 0
   },
   {
-    "question": "Which routing table code represents a directly connected network? (Q41)",
+    "question": "Which of the following prefixes represents the IPv6 default route?",
     "options": [
-      "S",
-      "C",
-      "O",
-      "R"
+      "::/0",
+      "::1/128",
+      "2000::/3",
+      "fe80::/10"
     ],
-    "correct": 1
+    "correct": 0
   },
   {
-    "question": "What is the administrative distance of a static route by default? (Q42)",
+    "question": "What command sets the IPv6 default static route (gateway of last resort) to next-hop FE80::1 on GigabitEthernet0/0?",
+    "options": [
+      "ipv6 route ::/0 FE80::1 GigabitEthernet0/0",
+      "ipv6 route ::/0 FE80::1",
+      "ip route 0.0.0.0 0.0.0.0 FE80::1 GigabitEthernet0/0",
+      "ipv6 route ::1/128 FE80::1 GigabitEthernet0/0"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "Which command configures an IPv4 default static route (gateway of last resort) to 192.168.1.254?",
+    "options": [
+      "ip route 0.0.0.0 0.0.0.0 192.168.1.254",
+      "ip default-gateway 192.168.1.254",
+      "ip route default 192.168.1.254",
+      "ip default-route 192.168.1.254"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "Which command shows the IPv6 routing table on a Cisco router?",
+    "options": [
+      "show ipv6 route",
+      "show ip route",
+      "show ipv6 static",
+      "show route ipv6"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "How do you remove a static route to network 10.1.1.0/24 via 192.168.10.1?",
+    "options": [
+      "no ip route 10.1.1.0 255.255.255.0 192.168.10.1",
+      "delete ip route 10.1.1.0 255.255.255.0 192.168.10.1",
+      "clear ip route 10.1.1.0 255.255.255.0",
+      "no static route 10.1.1.0 255.255.255.0 192.168.10.1"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What is a 'floating static route'?",
+    "options": [
+      "A static route with a higher AD to act as a backup",
+      "A default route with AD 0",
+      "A route learned from OSPF and converted to static",
+      "A static route for a loopback interface"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "If a static route's next-hop becomes unreachable, what happens?",
+    "options": [
+      "The route is removed from the routing table",
+      "The router forwards packets to the second-best route",
+      "The router generates a default route automatically",
+      "Nothing (the router continues to use it)"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "Which type of IPv6 address requires specifying an interface in a static route?",
+    "options": [
+      "Any global unicast address",
+      "Unique local address",
+      "Link-local address",
+      "Multicast address"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command displays the IPv4 routing table on a Cisco router?",
+    "options": [
+      "show ip route",
+      "show route ipv4",
+      "show route",
+      "show ipv4 route"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What distinguishes a static default route from a static network route?",
+    "options": [
+      "Default route (0.0.0.0/0) matches all destinations; network route matches one subnet",
+      "Default route uses a star in output; network route does not",
+      "Default route uses AD 0; network route uses AD 1",
+      "There is no difference"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What is the default administrative distance of a static IPv6 route?",
     "options": [
       "0",
       "1",
-      "90",
-      "120"
+      "10",
+      "255"
     ],
     "correct": 1
   },
   {
-    "question": "Which factor is considered first when a router chooses the best route? (Q43)",
+    "question": "Which statement about static routing is true?",
     "options": [
-      "Metric",
-      "Administrative Distance",
-      "Longest Prefix Match",
-      "Hop Count"
+      "Routes must be configured manually and do not change automatically",
+      "Static routes send periodic updates to neighbors",
+      "Static routes use hop count as the default metric",
+      "Static routes always override connected routes"
     ],
-    "correct": 2
+    "correct": 0
   },
   {
-    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q44)",
+    "question": "How do you configure a static route as a backup (floating) route?",
     "options": [
-      "show route ipv4",
-      "show ip interface brief",
-      "show ip route",
-      "display ip routing-table"
+      "Include a higher administrative distance in the ip route command",
+      "Use a default metric of 0",
+      "Set the route's metric higher than the primary route",
+      "Label it with backup keyword"
     ],
-    "correct": 2
+    "correct": 0
   },
   {
-    "question": "What prefix represents the default route in IPv4? (Q45)",
+    "question": "How do you configure a static route to network 10.10.10.0/24 via interface FastEthernet0/1?",
     "options": [
-      "255.255.255.0",
-      "192.168.0.0/16",
-      "10.0.0.0/8",
-      "0.0.0.0/0"
+      "ip route 10.10.10.0 255.255.255.0 FastEthernet0/1",
+      "ip route 10.10.10.0 255.255.255.255 FastEthernet0/1",
+      "ip route 10.10.10.0/24 Fa0/1",
+      "ip route 10.10.10.0 255.255.255.0 10.0.0.1"
     ],
-    "correct": 3
+    "correct": 0
   },
   {
-    "question": "Which routing protocol has the highest administrative distance by default? (Q46)",
+    "question": "Which command configures a static IPv6 route to 2001:db8:0:10::/64 via next-hop 2001:db8:0:1::1?",
     "options": [
-      "OSPF",
-      "Static",
-      "RIP",
-      "Connected"
+      "ipv6 route 2001:db8:0:10::/64 2001:db8:0:1::1",
+      "ipv6 route 2001:db8:10::/64 2001:db8:0:1::1",
+      "ip route 2001:db8:0:10::/64 2001:db8:0:1::1",
+      "ipv6 route 2001:db8:10::/64 GigabitEthernet0/0"
     ],
-    "correct": 2
+    "correct": 0
   },
   {
-    "question": "What metric does RIP use to select routes? (Q47)",
+    "question": "What IPv6 prefix length denotes a single-host route?",
     "options": [
-      "Bandwidth",
-      "Hop Count",
-      "Cost",
-      "Delay"
+      "/128",
+      "/64",
+      "/32",
+      "/48"
     ],
-    "correct": 1
+    "correct": 0
   },
   {
-    "question": "What is the purpose of the 'next hop' in a routing table? (Q48)",
+    "question": "Which command shows only static IPv6 routes on a Cisco router?",
     "options": [
-      "Identifies the interface",
-      "Specifies the exit gateway",
-      "Displays the MAC address",
-      "Provides a subnet mask"
+      "show ipv6 route static",
+      "show ipv6 static route",
+      "show ipv6 route S",
+      "show ipv6 route | include S"
     ],
-    "correct": 1
-  },
-  {
-    "question": "Which routing table code represents a directly connected network? (Q49)",
-    "options": [
-      "S",
-      "C",
-      "O",
-      "R"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the administrative distance of a static route by default? (Q50)",
-    "options": [
-      "0",
-      "1",
-      "90",
-      "120"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which factor is considered first when a router chooses the best route? (Q51)",
-    "options": [
-      "Metric",
-      "Administrative Distance",
-      "Longest Prefix Match",
-      "Hop Count"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q52)",
-    "options": [
-      "show route ipv4",
-      "show ip interface brief",
-      "show ip route",
-      "display ip routing-table"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What prefix represents the default route in IPv4? (Q53)",
-    "options": [
-      "255.255.255.0",
-      "192.168.0.0/16",
-      "10.0.0.0/8",
-      "0.0.0.0/0"
-    ],
-    "correct": 3
-  },
-  {
-    "question": "Which routing protocol has the highest administrative distance by default? (Q54)",
-    "options": [
-      "OSPF",
-      "Static",
-      "RIP",
-      "Connected"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What metric does RIP use to select routes? (Q55)",
-    "options": [
-      "Bandwidth",
-      "Hop Count",
-      "Cost",
-      "Delay"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the purpose of the 'next hop' in a routing table? (Q56)",
-    "options": [
-      "Identifies the interface",
-      "Specifies the exit gateway",
-      "Displays the MAC address",
-      "Provides a subnet mask"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which routing table code represents a directly connected network? (Q57)",
-    "options": [
-      "S",
-      "C",
-      "O",
-      "R"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the administrative distance of a static route by default? (Q58)",
-    "options": [
-      "0",
-      "1",
-      "90",
-      "120"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which factor is considered first when a router chooses the best route? (Q59)",
-    "options": [
-      "Metric",
-      "Administrative Distance",
-      "Longest Prefix Match",
-      "Hop Count"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q60)",
-    "options": [
-      "show route ipv4",
-      "show ip interface brief",
-      "show ip route",
-      "display ip routing-table"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What prefix represents the default route in IPv4? (Q61)",
-    "options": [
-      "255.255.255.0",
-      "192.168.0.0/16",
-      "10.0.0.0/8",
-      "0.0.0.0/0"
-    ],
-    "correct": 3
-  },
-  {
-    "question": "Which routing protocol has the highest administrative distance by default? (Q62)",
-    "options": [
-      "OSPF",
-      "Static",
-      "RIP",
-      "Connected"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What metric does RIP use to select routes? (Q63)",
-    "options": [
-      "Bandwidth",
-      "Hop Count",
-      "Cost",
-      "Delay"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the purpose of the 'next hop' in a routing table? (Q64)",
-    "options": [
-      "Identifies the interface",
-      "Specifies the exit gateway",
-      "Displays the MAC address",
-      "Provides a subnet mask"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which routing table code represents a directly connected network? (Q65)",
-    "options": [
-      "S",
-      "C",
-      "O",
-      "R"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the administrative distance of a static route by default? (Q66)",
-    "options": [
-      "0",
-      "1",
-      "90",
-      "120"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which factor is considered first when a router chooses the best route? (Q67)",
-    "options": [
-      "Metric",
-      "Administrative Distance",
-      "Longest Prefix Match",
-      "Hop Count"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q68)",
-    "options": [
-      "show route ipv4",
-      "show ip interface brief",
-      "show ip route",
-      "display ip routing-table"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What prefix represents the default route in IPv4? (Q69)",
-    "options": [
-      "255.255.255.0",
-      "192.168.0.0/16",
-      "10.0.0.0/8",
-      "0.0.0.0/0"
-    ],
-    "correct": 3
-  },
-  {
-    "question": "Which routing protocol has the highest administrative distance by default? (Q70)",
-    "options": [
-      "OSPF",
-      "Static",
-      "RIP",
-      "Connected"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What metric does RIP use to select routes? (Q71)",
-    "options": [
-      "Bandwidth",
-      "Hop Count",
-      "Cost",
-      "Delay"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the purpose of the 'next hop' in a routing table? (Q72)",
-    "options": [
-      "Identifies the interface",
-      "Specifies the exit gateway",
-      "Displays the MAC address",
-      "Provides a subnet mask"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which routing table code represents a directly connected network? (Q73)",
-    "options": [
-      "S",
-      "C",
-      "O",
-      "R"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the administrative distance of a static route by default? (Q74)",
-    "options": [
-      "0",
-      "1",
-      "90",
-      "120"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which factor is considered first when a router chooses the best route? (Q75)",
-    "options": [
-      "Metric",
-      "Administrative Distance",
-      "Longest Prefix Match",
-      "Hop Count"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q76)",
-    "options": [
-      "show route ipv4",
-      "show ip interface brief",
-      "show ip route",
-      "display ip routing-table"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What prefix represents the default route in IPv4? (Q77)",
-    "options": [
-      "255.255.255.0",
-      "192.168.0.0/16",
-      "10.0.0.0/8",
-      "0.0.0.0/0"
-    ],
-    "correct": 3
-  },
-  {
-    "question": "Which routing protocol has the highest administrative distance by default? (Q78)",
-    "options": [
-      "OSPF",
-      "Static",
-      "RIP",
-      "Connected"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What metric does RIP use to select routes? (Q79)",
-    "options": [
-      "Bandwidth",
-      "Hop Count",
-      "Cost",
-      "Delay"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the purpose of the 'next hop' in a routing table? (Q80)",
-    "options": [
-      "Identifies the interface",
-      "Specifies the exit gateway",
-      "Displays the MAC address",
-      "Provides a subnet mask"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which routing table code represents a directly connected network? (Q81)",
-    "options": [
-      "S",
-      "C",
-      "O",
-      "R"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the administrative distance of a static route by default? (Q82)",
-    "options": [
-      "0",
-      "1",
-      "90",
-      "120"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which factor is considered first when a router chooses the best route? (Q83)",
-    "options": [
-      "Metric",
-      "Administrative Distance",
-      "Longest Prefix Match",
-      "Hop Count"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q84)",
-    "options": [
-      "show route ipv4",
-      "show ip interface brief",
-      "show ip route",
-      "display ip routing-table"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What prefix represents the default route in IPv4? (Q85)",
-    "options": [
-      "255.255.255.0",
-      "192.168.0.0/16",
-      "10.0.0.0/8",
-      "0.0.0.0/0"
-    ],
-    "correct": 3
-  },
-  {
-    "question": "Which routing protocol has the highest administrative distance by default? (Q86)",
-    "options": [
-      "OSPF",
-      "Static",
-      "RIP",
-      "Connected"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What metric does RIP use to select routes? (Q87)",
-    "options": [
-      "Bandwidth",
-      "Hop Count",
-      "Cost",
-      "Delay"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the purpose of the 'next hop' in a routing table? (Q88)",
-    "options": [
-      "Identifies the interface",
-      "Specifies the exit gateway",
-      "Displays the MAC address",
-      "Provides a subnet mask"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which routing table code represents a directly connected network? (Q89)",
-    "options": [
-      "S",
-      "C",
-      "O",
-      "R"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the administrative distance of a static route by default? (Q90)",
-    "options": [
-      "0",
-      "1",
-      "90",
-      "120"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which factor is considered first when a router chooses the best route? (Q91)",
-    "options": [
-      "Metric",
-      "Administrative Distance",
-      "Longest Prefix Match",
-      "Hop Count"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q92)",
-    "options": [
-      "show route ipv4",
-      "show ip interface brief",
-      "show ip route",
-      "display ip routing-table"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What prefix represents the default route in IPv4? (Q93)",
-    "options": [
-      "255.255.255.0",
-      "192.168.0.0/16",
-      "10.0.0.0/8",
-      "0.0.0.0/0"
-    ],
-    "correct": 3
-  },
-  {
-    "question": "Which routing protocol has the highest administrative distance by default? (Q94)",
-    "options": [
-      "OSPF",
-      "Static",
-      "RIP",
-      "Connected"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "What metric does RIP use to select routes? (Q95)",
-    "options": [
-      "Bandwidth",
-      "Hop Count",
-      "Cost",
-      "Delay"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the purpose of the 'next hop' in a routing table? (Q96)",
-    "options": [
-      "Identifies the interface",
-      "Specifies the exit gateway",
-      "Displays the MAC address",
-      "Provides a subnet mask"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which routing table code represents a directly connected network? (Q97)",
-    "options": [
-      "S",
-      "C",
-      "O",
-      "R"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "What is the administrative distance of a static route by default? (Q98)",
-    "options": [
-      "0",
-      "1",
-      "90",
-      "120"
-    ],
-    "correct": 1
-  },
-  {
-    "question": "Which factor is considered first when a router chooses the best route? (Q99)",
-    "options": [
-      "Metric",
-      "Administrative Distance",
-      "Longest Prefix Match",
-      "Hop Count"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "Which command shows the IPv4 routing table in Cisco IOS? (Q100)",
-    "options": [
-      "show route ipv4",
-      "show ip interface brief",
-      "show ip route",
-      "display ip routing-table"
-    ],
-    "correct": 2
-  },
-  
+    "correct": 0
+  }  
   {
     "question": "Two routers R1 and R2 are on the same Ethernet network in area 0. R1 has IP 10.0.0.1/24 and a loopback interface with IP 192.168.1.1. R2 has IP 10.0.0.2/24 and no loopback. Both have default OSPF priorities (1). Which router becomes the Designated Router (DR) on this network?",
     "options": [
